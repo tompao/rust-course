@@ -3,7 +3,11 @@ use std::collections::HashMap;
 /// Counts how many times each word appears in the text.
 /// Words are separated by spaces and should be case-insensitive.
 fn count_words(text: &str) -> HashMap<String, usize> {
-    todo!()
+    let mut counter: HashMap<String, usize> = HashMap::new();
+    for w in text.split_whitespace() {
+        *counter.entry(w.to_lowercase()).or_insert(0) += 1
+    }
+    counter
 }
 
 /// Calculates basic text statistics.
@@ -14,7 +18,15 @@ fn count_words(text: &str) -> HashMap<String, usize> {
 /// the call site. We're sticking with a tuple to keep the focus on the
 /// iterator chain in the body.
 fn text_stats(text: &str) -> (usize, usize, f64) {
-    todo!()
+    let counter = dbg!(count_words(text));
+    let total_words = counter.iter().map(|(_, count)| count).sum();
+    let unique_words = counter.iter().count();
+    let summed_word_length: usize = counter
+        .iter()
+        .map(|(word, _)| word.chars().count())
+        .sum();
+    let average_word_length = dbg!(summed_word_length) as f64 / unique_words as f64;
+    (total_words, unique_words, dbg!(average_word_length))
 }
 
 #[test]
