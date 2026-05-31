@@ -16,6 +16,10 @@ path = "src/bin/server.rs"
 name = "text_stats"
 path = "examples/16_word_frequencies/5_text_stats.rs"
 
+[[test]]
+name = "validate"
+path = "examples/13_traits/5_validate.rs"
+
 [package.metadata.exercises.13_question_mark_operator]
 difficulty = "beginner"
 tags = ["question-mark", "result", "error-handling"]

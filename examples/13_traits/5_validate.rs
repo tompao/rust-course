@@ -31,7 +31,11 @@ struct MustContain {
 
 impl Validator for MustContain {
     fn check(&self, input: &str) -> Result<(), String> {
-        todo!()
+        if input.contains(&self.needle) {
+            Ok(())
+        } else {
+            Err(format!("must contain '{}'", self.needle))
+        }
     }
 }
 
@@ -44,7 +48,11 @@ struct MustNotContain {
 
 impl Validator for MustNotContain {
     fn check(&self, input: &str) -> Result<(), String> {
-        todo!()
+        if input.contains(&self.forbidden) {
+            Err(format!("must not contain '{}'", self.forbidden))
+        } else {
+            Ok(())
+        }
     }
 }
 
@@ -59,7 +67,16 @@ impl Validator for MustNotContain {
 /// An input that passes everything returns an empty `Vec`. The
 /// returned `Vec<String>` contains only the `Err` messages.
 fn collect_errors(validators: &[&dyn Validator], input: &str) -> Vec<String> {
-    todo!()
+    validators
+        .iter()
+        .filter_map(|v| {
+            if let Err(err) = v.check(input) {
+                Some(err)
+            } else {
+                None
+            }
+        })
+        .collect()
 }
 
 #[test]
