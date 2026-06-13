@@ -1,6 +1,6 @@
 /// Reads a file and counts lines. Note how `?` works with a different error type.
 fn count_file_lines(filename: &str) -> Result<usize, std::io::Error> {
-    todo!()
+    Ok(std::fs::read_to_string(filename)?.lines().count())
 }
 
 #[test]

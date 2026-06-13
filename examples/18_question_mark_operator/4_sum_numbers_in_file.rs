@@ -1,7 +1,11 @@
 /// Combines parsing and file I/O errors using `Box<dyn Error>`.
 /// This shows how `?` can handle multiple error types in one function.
 fn sum_numbers_in_file(filename: &str) -> Result<i32, Box<dyn std::error::Error>> {
-    todo!()
+    let total = std::fs::read_to_string(filename)?
+        .lines()
+        .map(|line| line.parse::<i32>())
+        .sum::<Result<i32, _>>()?;
+    Ok(total)
 }
 
 #[test]
